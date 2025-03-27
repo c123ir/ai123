@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:13
+    container_name: computer123_postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: computer123
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - computer123_network
+    restart: unless-stopped
+
+  redis:
+    image: redis:6
+    container_name: computer123_redis
+    ports:
+      - "6380:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - computer123_network
+    restart: unless-stopped
+
+networks:
+  computer123_network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  redis_data: 

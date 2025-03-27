@@ -1,0 +1,40 @@
+/* استایل‌های عمومی */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Vazirmatn', 'Tahoma', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* استایل‌های ant design */
+.ant-layout {
+  min-height: 100vh;
+}
+
+.ant-menu-horizontal {
+  border-bottom: none;
+}
+
+.ant-card {
+  overflow: hidden;
+}
+
+.ant-statistic-content {
+  direction: ltr;
+}
+
+.ant-statistic-content-suffix {
+  margin-right: 4px;
+  direction: rtl;
+}
+
+.ant-form-rtl .ant-form-item-label {
+  text-align: right;
+}
+
+/* تنظیمات خاص */
+* {
+  box-sizing: border-box;
+  font-family: 'Vazirmatn', 'Tahoma', sans-serif;
+} 

@@ -1,0 +1,302 @@
+/* استایل‌های پایه برنامه */
+
+/* بارگذاری فونت Vazirmatn از CDN */
+@import url('../assets/fonts/vazirmatn.css');
+
+/* تنظیمات کلی */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body{
+  height: 100%;
+  width: 100%;
+  font-family: 'Vazirmatn', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  direction: rtl;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+[dir="rtl"] body {
+  direction: rtl;
+  text-align: right;
+}
+
+/* تایپوگرافی */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Vazirmatn', 'Roboto', 'Helvetica Neue', sans-serif;
+  font-weight: bold;
+}
+
+/* اصلاح اعداد فارسی */
+.persian-number {
+  font-feature-settings: "ss01";
+}
+
+/* استایل‌های کمکی */
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-left {
+  text-align: left;
+}
+
+/* اجزای اصلی برنامه */
+#root {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* تنظیمات پایه */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  direction: rtl;
+  font-size: 16px;
+}
+
+body {
+  min-height: 100vh;
+  text-rendering: optimizeSpeed;
+  line-height: 1.5;
+  overflow-x: hidden;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+  direction: ltr;
+  display: inline-block;
+}
+
+/* تنظیم جهت داده‌های عددی و انگلیسی در محیط RTL */
+.ltr {
+  direction: ltr;
+  text-align: left;
+}
+
+.rtl {
+  direction: rtl;
+  text-align: right;
+}
+
+/* تنظیمات برای اعداد */
+.number {
+  font-family: 'Roboto', 'Vazirmatn', sans-serif;
+  direction: ltr;
+  display: inline-block;
+}
+
+/* تنظیمات حالت انتخاب */
+::selection {
+  background-color: rgba(76, 175, 80, 0.3);
+}
+
+/* تنظیمات اسکرول */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c2c2c2;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a1a1a1;
+}
+
+/* تنظیمات دکمه‌ها */
+button {
+  font-family: 'Vazirmatn', 'Roboto', sans-serif;
+}
+
+/* کلاس پنهان‌کننده برای نمایش/عدم نمایش المان‌ها */
+.hidden {
+  display: none !important;
+}
+
+/* تنظیمات متن */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  margin-bottom: 0.5em;
+}
+
+p {
+  margin-bottom: 1em;
+}
+
+a {
+  color: #4caf50;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* قالب‌بندی ورودی‌ها */
+input, textarea {
+  font-family: 'Vazirmatn', 'Roboto', sans-serif;
+}
+
+/* تنظیمات رسانه‌ای */
+img, video {
+  max-width: 100%;
+  display: block;
+}
+
+/* حالت تاریک */
+@media (prefers-color-scheme: dark) {
+  ::selection {
+    background-color: rgba(129, 199, 132, 0.3);
+  }
+}
+
+/* styles/index.css - استایل‌های سراسری */
+
+/* تنظیمات ریست */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* متغیرهای CSS */
+:root {
+  --color-primary: #4caf50;
+  --color-secondary: #2196f3;
+  --color-error: #f44336;
+  --color-warning: #ff9800;
+  --color-success: #4caf50;
+  --color-info: #2196f3;
+  --color-text-primary: #333333;
+  --color-text-secondary: #666666;
+  --color-text-disabled: #999999;
+  --color-background-primary: #f5f5f5;
+  --color-background-secondary: #eeeeee;
+  --color-background-paper: #ffffff;
+}
+
+/* تنظیم فونت پیش‌فرض */
+body {
+  font-family: 'Vazirmatn', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  background-color: var(--color-background-primary);
+  color: var(--color-text-primary);
+  direction: rtl;
+}
+
+/* تنظیمات عمومی عناصر */
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* تنظیمات برای حالت تاریک */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-text-primary: #ffffff;
+    --color-text-secondary: #cccccc;
+    --color-background-primary: #212121;
+    --color-background-secondary: #333333;
+    --color-background-paper: #424242;
+  }
+}
+
+/* تنظیمات RTL برای اجزای Material UI */
+.MuiInputBase-root,
+.MuiOutlinedInput-root,
+.MuiInputLabel-root,
+.MuiTypography-root,
+.MuiMenuItem-root,
+.MuiButton-root {
+  direction: rtl !important;
+  text-align: right;
+}
+
+.MuiFormLabel-root {
+  transform-origin: top right !important;
+  right: 0 !important;
+  left: auto !important;
+}
+
+.MuiOutlinedInput-notchedOutline {
+  text-align: right !important;
+}
+
+.MuiInputLabel-formControl {
+  right: 0;
+  left: auto;
+  transform-origin: top right;
+}
+
+.MuiTableCell-root {
+  text-align: right !important;
+}
+
+/* فایل استایل اصلی برنامه */
+
+@import url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css');
+
+body {
+  margin: 0;
+  font-family: 'Vazirmatn', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  direction: rtl;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/* تنظیمات RTL برای اجزای Ant Design */
+.ant-input,
+.ant-select,
+.ant-picker,
+.ant-form-item-label,
+.ant-modal-title,
+.ant-typography {
+  text-align: right;
+}
+
+/* استایل‌های مربوط به تبدیل اعداد */
+.ltr-nums {
+  direction: ltr;
+  display: inline-block;
+}
+
+/* استایل‌های دیگر برنامه */

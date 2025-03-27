@@ -2,8 +2,8 @@
 
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import AdminLayout from '../components/layout/AdminLayout';
-import Dashboard from '../pages/admin/dashboard/Dashboard';
+import AdminLayout from '../modules/admin/components/AdminLayout';
+import AdminModuleRoutes from '../modules/admin/routes/AdminRoutes';
 
 /**
  * مسیرهای پنل مدیریت
@@ -11,21 +11,10 @@ import Dashboard from '../pages/admin/dashboard/Dashboard';
 const AdminRoutes: React.FC = () => {
   return (
     <Routes>
-      <Route element={<AdminLayout />}>
-        {/* مسیر اصلی - ریدایرکت به داشبورد */}
+      <Route path="/" element={<AdminLayout />}>
         <Route index element={<Navigate to="/admin/dashboard" replace />} />
-        
-        {/* داشبورد مدیریت */}
-        <Route path="dashboard" element={<Dashboard />} />
-        
-        {/* سایر مسیرها - فعلا به داشبورد هدایت می‌شوند */}
-        <Route path="users" element={<Dashboard />} />
-        <Route path="tokens" element={<Dashboard />} />
-        <Route path="reports" element={<Dashboard />} />
-        <Route path="settings" element={<Dashboard />} />
-        
-        {/* مسیرهای نامعتبر - ریدایرکت به داشبورد */}
-        <Route path="*" element={<Navigate to="/admin/dashboard" replace />} />
+        {/* استفاده از مسیرهای تعریف شده در ماژول ادمین */}
+        <Route path="*" element={<AdminModuleRoutes />} />
       </Route>
     </Routes>
   );

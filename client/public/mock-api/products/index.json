@@ -1,0 +1,83 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "title": "گوشی موبایل سامسونگ گلکسی A52",
+      "price": 12500000,
+      "discountPrice": 11200000,
+      "image": "https://via.placeholder.com/300x300",
+      "category": "دیجیتال",
+      "rating": 4.2,
+      "sold": 150
+    },
+    {
+      "id": 2,
+      "title": "لپ‌تاپ لنوو IdeaPad L340",
+      "price": 32000000,
+      "image": "https://via.placeholder.com/300x300",
+      "category": "دیجیتال",
+      "rating": 4.5,
+      "sold": 75
+    },
+    {
+      "id": 3,
+      "title": "هدفون بی‌سیم سونی WH-1000XM4",
+      "price": 4500000,
+      "discountPrice": 3900000,
+      "image": "https://via.placeholder.com/300x300",
+      "category": "دیجیتال",
+      "rating": 4.8,
+      "sold": 320
+    },
+    {
+      "id": 4,
+      "title": "پیراهن مردانه آستین بلند",
+      "price": 850000,
+      "image": "https://via.placeholder.com/300x300",
+      "category": "پوشاک",
+      "rating": 3.9,
+      "sold": 85
+    },
+    {
+      "id": 5,
+      "title": "تبلت اپل iPad Pro 2021",
+      "price": 24500000,
+      "image": "https://via.placeholder.com/300x300",
+      "category": "دیجیتال",
+      "rating": 4.7,
+      "sold": 62
+    },
+    {
+      "id": 6,
+      "title": "ساعت هوشمند اپل Watch Series 7",
+      "price": 14200000,
+      "discountPrice": 12800000,
+      "image": "https://via.placeholder.com/300x300",
+      "category": "دیجیتال",
+      "rating": 4.6,
+      "sold": 94
+    },
+    {
+      "id": 7,
+      "title": "کفش ورزشی نایک ایر مکس",
+      "price": 3200000,
+      "image": "https://via.placeholder.com/300x300",
+      "category": "پوشاک",
+      "rating": 4.4,
+      "sold": 215
+    },
+    {
+      "id": 8,
+      "title": "میز تحریر چوبی",
+      "price": 2700000,
+      "image": "https://via.placeholder.com/300x300",
+      "category": "خانه و آشپزخانه",
+      "rating": 4.1,
+      "sold": 47
+    }
+  ],
+  "total": 8,
+  "page": 1,
+  "limit": 12,
+  "totalPages": 1
+} 

@@ -5,12 +5,14 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { ConfigProvider } from 'antd';
 import { ThemeProvider as EmotionThemeProvider } from '@emotion/react';
+import { Provider } from 'react-redux';
 import './assets/fonts/vazirmatn.css';
 import './assets/fonts/fonts.css';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { ThemeProvider } from './components/common/ThemeContext';
+import { ThemeProvider } from './modules/shared/context/ThemeContext';
+import store from './store';
 import fa_IR from 'antd/locale/fa_IR';
 import dayjs from 'dayjs';
 import jalaliday from 'jalaliday';
@@ -48,23 +50,25 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <ConfigProvider
-        direction="rtl"
-        locale={fa_IR}
-        theme={{
-          token: {
-            fontFamily: 'Vazirmatn, -apple-system, BlinkMacSystemFont, sans-serif',
-          },
-        }}
-      >
-        <EmotionThemeProvider theme={emotionTheme}>
-          <ThemeProvider>
-            <App />
-          </ThemeProvider>
-        </EmotionThemeProvider>
-      </ConfigProvider>
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <ConfigProvider
+          direction="rtl"
+          locale={fa_IR}
+          theme={{
+            token: {
+              fontFamily: 'Vazirmatn, -apple-system, BlinkMacSystemFont, sans-serif',
+            },
+          }}
+        >
+          <EmotionThemeProvider theme={emotionTheme}>
+            <ThemeProvider>
+              <App />
+            </ThemeProvider>
+          </EmotionThemeProvider>
+        </ConfigProvider>
+      </BrowserRouter>
+    </Provider>
   </React.StrictMode>
 );
 

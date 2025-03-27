@@ -194,7 +194,7 @@ const HelpPage: React.FC = () => {
             ),
             children: (
               <Collapse 
-                bordered={false} 
+                variant="borderless" 
                 defaultActiveKey={['0']}
                 style={{ background: 'transparent' }}
               >

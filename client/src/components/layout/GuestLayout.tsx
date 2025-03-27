@@ -45,18 +45,9 @@ const StyledLayout = styled(Layout)`
   min-height: 100vh;
 `;
 
-const StyledHeader = styled(Header)`
-  background: ${props => props.theme === 'light' ? '#fff' : '#141414'};
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  padding: 0 16px;
-  position: fixed;
-  z-index: 10;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 64px;
-`;
+interface ThemedProps {
+  $theme: 'light' | 'dark';
+}
 
 const Logo = styled(motion.div)`
   font-size: 1.5rem;
@@ -79,28 +70,6 @@ const MainContent = styled(Content)`
   flex-direction: column;
 `;
 
-const StyledContentWrapper = styled(motion.div)<{ siderMode: SiderMode }>`
-  padding: 24px;
-  flex: 1;
-  margin-right: ${props => {
-    if (props.siderMode === 'expanded') return '200px';
-    if (props.siderMode === 'collapsed') return '80px';
-    return '0';
-  }};
-  transition: margin 0.3s;
-  
-  @media (max-width: 768px) {
-    margin-right: 0;
-  }
-`;
-
-const StyledFooter = styled(Footer)`
-  text-align: center;
-  background: ${props => props.theme === 'light' ? '#f0f2f5' : '#1f1f1f'};
-  position: sticky;
-  bottom: 0;
-`;
-
 const StyledSider = styled(Sider)`
   overflow: auto;
   height: 100vh;
@@ -111,7 +80,11 @@ const StyledSider = styled(Sider)`
   z-index: 5;
 `;
 
-const ThemeToggleButton = styled(motion.button)<{ $isDark: boolean }>`
+interface ThemeButtonProps {
+  $isDark: boolean;
+}
+
+const ThemeToggleButton = styled.button<ThemeButtonProps>`
   width: 72px;
   height: 36px;
   background: ${props => props.$isDark ? 'linear-gradient(to right, #121212, #3a3a3a)' : 'linear-gradient(to right, #a7c5eb, #d6e6ff)'};
@@ -150,9 +123,7 @@ const ThemeToggleButton = styled(motion.button)<{ $isDark: boolean }>`
   }
 `;
 
-const HeaderThemeToggle = styled(ThemeToggleButton)`
-  margin-left: 16px;
-`;
+const AnimatedThemeToggle = motion(ThemeToggleButton);
 
 const HeaderActions = styled.div`
   display: flex;
@@ -170,7 +141,7 @@ const SidebarToggleButton = styled(Button)`
   margin: 0 4px;
 `;
 
-const UserItem = styled.div`
+const UserItem = styled.div<ThemedProps>`
   padding: 16px;
   text-align: center;
   border-bottom: 1px solid ${props => props.$theme === 'dark' ? '#303030' : '#f0f0f0'};
@@ -184,6 +155,27 @@ type SiderMode = 'expanded' | 'collapsed' | 'hidden';
 interface GuestLayoutProps {
   children?: React.ReactNode;
 }
+
+// تعریف استایل‌های Header و Footer به صورت آبجکت تابعی
+const getHeaderStyle = (theme: string) => ({
+  background: theme === 'light' ? '#fff' : '#141414',
+  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+  padding: '0 16px',
+  position: 'fixed' as const,
+  zIndex: 10,
+  width: '100%',
+  display: 'flex' as const,
+  alignItems: 'center' as const,
+  justifyContent: 'space-between' as const,
+  height: '64px',
+});
+
+const getFooterStyle = (theme: string) => ({
+  textAlign: 'center' as const,
+  background: theme === 'light' ? '#f0f2f5' : '#1f1f1f',
+  position: 'sticky' as const,
+  bottom: 0,
+});
 
 // دریافت ماژول‌های فعال برای کاربر مهمان - این می‌تواند از API دریافت شود
 const getGuestModules = async () => {
@@ -345,7 +337,7 @@ const GuestLayout: React.FC<GuestLayoutProps> = () => {
 
   return (
     <StyledLayout>
-      <StyledHeader theme={theme}>
+      <Header style={getHeaderStyle(theme)}>
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <Button 
             type="text" 
@@ -365,14 +357,14 @@ const GuestLayout: React.FC<GuestLayoutProps> = () => {
         </div>
         
         <HeaderActions>
-          <HeaderThemeToggle 
+          <AnimatedThemeToggle 
             $isDark={theme === 'dark'} 
             onClick={toggleTheme}
             whileTap={{ scale: 0.95 }}
           >
             <SunOutlined className="icon" />
             <MoonOutlined className="icon" />
-          </HeaderThemeToggle>
+          </AnimatedThemeToggle>
           
           <Tooltip title="اعلان‌ها">
             <Badge count={0} dot>
@@ -403,7 +395,7 @@ const GuestLayout: React.FC<GuestLayoutProps> = () => {
             </Button>
           )}
         </HeaderActions>
-      </StyledHeader>
+      </Header>
       
       <Layout>
         <StyledSider
@@ -460,21 +452,27 @@ const GuestLayout: React.FC<GuestLayoutProps> = () => {
         
         <MainContent>
           <AnimatePresence mode="wait">
-            <StyledContentWrapper
+            <motion.div
               key={location.pathname}
               variants={contentVariants}
               initial="hidden"
               animate="visible"
               exit="exit"
-              siderMode={siderMode}
+              className="content-wrapper"
+              style={{
+                padding: '24px',
+                flex: 1,
+                marginRight: siderMode === 'expanded' ? '200px' : siderMode === 'collapsed' ? '80px' : '0',
+                transition: 'margin 0.3s'
+              }}
             >
-          <Outlet />
-            </StyledContentWrapper>
+              <Outlet />
+            </motion.div>
           </AnimatePresence>
           
-          <StyledFooter theme={theme}>
+          <Footer style={getFooterStyle(theme)}>
             دستیار هوشمند یک‌دوسه &copy; {new Date().getFullYear()} - تمامی حقوق محفوظ است
-          </StyledFooter>
+          </Footer>
         </MainContent>
       </Layout>
     </StyledLayout>

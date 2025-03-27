@@ -226,11 +226,11 @@ const TokenBadge = styled(motion.div)<{ $theme?: string }>`
   }
 `;
 
-const StatisticCard = styled(motion.div)`
+const StatisticCard = styled(motion.div)<{ $theme?: string }>`
   padding: 24px;
   border-radius: 16px;
   height: 100%;
-  background: ${props => props.theme === 'dark' 
+  background: ${props => props.$theme === 'dark' 
     ? '#141414' 
     : '#fff'};
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -448,40 +448,42 @@ const GuestDashboard: React.FC = () => {
           viewport={{ once: true, amount: 0.3 }}
           custom={index}
         >
-          <StyledCard
-            as={Card}
-            hoverable={!feature.premium}
-            style={{ height: '100%', textAlign: 'center', border: 'none', background: 'transparent' }}
-            $theme={theme}
-            onClick={() => navigate(feature.path)}
+          <div 
+            onClick={!feature.premium ? () => navigate(feature.path) : undefined}
+            style={{ cursor: !feature.premium ? 'pointer' : 'default' }}
           >
-            {feature.featured && (
-              <Badge.Ribbon text="پیشنهاد ویژه" color="#1890ff" />
-            )}
-            <FeatureIcon $theme={theme}>
-              {feature.icon}
-            </FeatureIcon>
-            <Title level={4}>
-              {feature.title}
-            </Title>
-            <Paragraph type="secondary">
-              {feature.description}
-            </Paragraph>
-            
-            {feature.premium ? (
-              <Tag color="warning" style={{ padding: '0 8px', margin: '8px 0' }}>
-                نیازمند ثبت‌نام <LockOutlined style={{ marginRight: 4 }} />
-              </Tag>
-            ) : (
-            <Button 
-                type="link" 
-                icon={<ArrowRightOutlined />}
-                style={{ marginTop: 8 }}
-              >
-                استفاده کنید
-            </Button>
-            )}
-          </StyledCard>
+            <StyledCard
+              $theme={theme}
+              style={{ height: '100%', textAlign: 'center', border: 'none', background: 'transparent' }}
+            >
+              {feature.featured && (
+                <Badge.Ribbon text="پیشنهاد ویژه" color="#1890ff" />
+              )}
+              <FeatureIcon $theme={theme}>
+                {feature.icon}
+              </FeatureIcon>
+              <Title level={4}>
+                {feature.title}
+              </Title>
+              <Paragraph type="secondary">
+                {feature.description}
+              </Paragraph>
+              
+              {feature.premium ? (
+                <Tag color="warning" style={{ padding: '0 8px', margin: '8px 0' }}>
+                  نیازمند ثبت‌نام <LockOutlined style={{ marginRight: 4 }} />
+                </Tag>
+              ) : (
+              <Button 
+                  type="link" 
+                  icon={<ArrowRightOutlined />}
+                  style={{ marginTop: 8 }}
+                >
+                  استفاده کنید
+              </Button>
+              )}
+            </StyledCard>
+          </div>
         </motion.div>
       </Col>
     ));
@@ -559,7 +561,7 @@ const GuestDashboard: React.FC = () => {
     return (
       <Row gutter={[24, 24]}>
         <Col xs={24} sm={8}>
-          <StatisticCard theme={theme}
+          <StatisticCard $theme={theme}
             variants={cardVariants}
             initial="offscreen"
             whileInView="onscreen"
@@ -577,7 +579,7 @@ const GuestDashboard: React.FC = () => {
           </StatisticCard>
         </Col>
         <Col xs={24} sm={8}>
-          <StatisticCard theme={theme}
+          <StatisticCard $theme={theme}
             variants={cardVariants}
             initial="offscreen"
             whileInView="onscreen"
@@ -595,7 +597,7 @@ const GuestDashboard: React.FC = () => {
           </StatisticCard>
         </Col>
         <Col xs={24} sm={8}>
-          <StatisticCard theme={theme}
+          <StatisticCard $theme={theme}
             variants={cardVariants}
             initial="offscreen"
             whileInView="onscreen"

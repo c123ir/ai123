@@ -76,6 +76,9 @@ const AppRoutes: React.FC = () => {
         }
       />
       
+      {/* ریدایرکت به صفحه لاگین ادمین */}
+      <Route path="/admin" element={<Navigate to="/admin/login" replace />} />
+      
       {/* مسیر 404 */}
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>

@@ -1,0 +1,33 @@
+/* فایل استایل جهانی */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Vazirmatn', 'Tahoma', sans-serif;
+  direction: rtl;
+  background-color: #f5f5f5;
+}
+
+/* استایل‌های عمومی */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* استایل برای نوشته‌های فارسی */
+.persian-text {
+  font-family: 'Vazirmatn', 'Tahoma', sans-serif;
+} 

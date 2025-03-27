@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import {
-  Box,
   Typography,
   Card,
-  CardContent,
   Grid,
   Tabs,
   Tab,
@@ -64,9 +62,9 @@ const TabPanel = (props: TabPanelProps) => {
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 3 }}>
+        <div style={{ padding: '24px' }}>
           {children}
-        </Box>
+        </div>
       )}
     </div>
   );
@@ -164,7 +162,7 @@ const SettingsPage: React.FC = () => {
   };
 
   return (
-    <Box>
+    <div>
       <Typography variant="h4" component="h1" gutterBottom>
         تنظیمات
       </Typography>
@@ -181,7 +179,7 @@ const SettingsPage: React.FC = () => {
       )}
       
       <Card>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+        <div style={{ borderBottom: '1px solid', borderColor: 'divider' }}>
           <Tabs 
             value={activeTab} 
             onChange={handleTabChange} 
@@ -209,7 +207,7 @@ const SettingsPage: React.FC = () => {
               {...a11yProps(3)} 
             />
           </Tabs>
-        </Box>
+        </div>
         
         {/* تب حساب کاربری */}
         <TabPanel value={activeTab} index={0}>
@@ -285,15 +283,16 @@ const SettingsPage: React.FC = () => {
                   defaultValue="من یک کاربر دستیار هوشمند ۱۲۳ هستم و از این سامانه برای پاسخگویی به سوالات و انجام کارهای روزمره استفاده می‌کنم."
                 />
               </Grid>
-              <Grid item xs={12}>
+              <div style={{ marginTop: '24px' }}>
                 <Button
-                  type="submit"
                   variant="contained"
+                  color="primary"
                   startIcon={<SaveIcon />}
+                  type="submit"
                 >
                   ذخیره تغییرات
                 </Button>
-              </Grid>
+              </div>
             </Grid>
           </form>
         </TabPanel>
@@ -394,15 +393,16 @@ const SettingsPage: React.FC = () => {
                 </Grid>
               </FormGroup>
             </FormControl>
-            <Box sx={{ mt: 3 }}>
+            <div style={{ marginTop: '16px' }}>
               <Button
-                type="submit"
                 variant="contained"
+                color="primary"
                 startIcon={<SaveIcon />}
+                type="submit"
               >
                 ذخیره تنظیمات اعلان‌ها
               </Button>
-            </Box>
+            </div>
           </form>
         </TabPanel>
         
@@ -541,7 +541,7 @@ const SettingsPage: React.FC = () => {
                 <Typography variant="body2" gutterBottom>
                   با حذف حساب، تمامی اطلاعات شما از سیستم حذف خواهد شد و این عمل قابل بازگشت نیست.
                 </Typography>
-                <Box sx={{ mt: 2 }}>
+                <div style={{ marginTop: '16px' }}>
                   <Button
                     variant="outlined"
                     color="error"
@@ -549,7 +549,7 @@ const SettingsPage: React.FC = () => {
                   >
                     حذف حساب کاربری
                   </Button>
-                </Box>
+                </div>
               </Card>
             </Grid>
           </Grid>
@@ -609,7 +609,7 @@ const SettingsPage: React.FC = () => {
           </Grid>
         </TabPanel>
       </Card>
-    </Box>
+    </div>
   );
 };
 

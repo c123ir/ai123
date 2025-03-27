@@ -28,7 +28,7 @@ import {
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import styled from '@emotion/styled';
-import DigitConverter from '../../../components/common/DigitConverter';
+import DigitConverter from '../../../modules/shared/utils/DigitConverter';
 
 const { Title, Text, Paragraph } = Typography;
 const { TextArea } = Input;

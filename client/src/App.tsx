@@ -1,22 +1,25 @@
-import React from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
-import { ThemeProvider } from './components/common/ThemeContext';
+import React, { lazy, Suspense } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import { notification } from 'antd';
-import FontLoader from './components/common/FontLoader';
-import GuestRoutes from './pages/guest/GuestRoutes';
-import AuthLayout from './components/layout/AuthLayout';
-import Login from './pages/common/auth/Login';
-import Register from './pages/common/auth/Register';
-import ForgotPassword from './pages/common/auth/ForgotPassword';
-import ProtectedRoute from './components/common/ProtectedRoute';
-import UserDashboard from './pages/user/dashboard/UserDashboard';
-import NotFoundPage from './pages/common/NotFoundPage';
-import AdminRoutes from './routes/AdminRoutes';
+import './assets/styles/global.css';
 
-// تنظیمات نوتیفیکیشن
+// کامپوننت لودینگ
+const Loading = () => (
+  <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+    <img src="/images/loading.gif" alt="در حال بارگذاری..." />
+  </div>
+);
+
+// لیزی لودینگ مسیرها
+const AdminRoutes = lazy(() => import('./routes/AdminRoutes'));
+const UserRoutes = lazy(() => import('./routes/UserRoutes'));
+const SimpleRoutes = lazy(() => import('./routes/SimpleRoutes'));
+const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
+
+// تنظیم سیستم نوتیفیکیشن
 notification.config({
   placement: 'topRight',
-  duration: 4.5,
+  rtl: true,
 });
 
 /**
@@ -24,52 +27,21 @@ notification.config({
  */
 const App: React.FC = () => {
   return (
-    <ThemeProvider>
-      {/* لودر فونت‌ها */}
-      <FontLoader />
-      
-      {/* سیستم نوتیفیکیشن */}
-      <div className="notification-container" />
-      
-      {/* مسیرهای اصلی */}
+    <Suspense fallback={<Loading />}>
       <Routes>
-        {/* ریدایرکت از صفحه اصلی به داشبورد مهمان */}
-        <Route path="/" element={<Navigate to="/guest/dashboard" replace />} />
-        
-        {/* مسیرهای مهمان */}
-        <Route path="/guest/*" element={<GuestRoutes />} />
-        
-        {/* مسیرهای احراز هویت */}
-        <Route path="/auth" element={<AuthLayout />}>
-          <Route path="login" element={<Login />} />
-          <Route path="register" element={<Register />} />
-          <Route path="forgot-password" element={<ForgotPassword />} />
-        </Route>
-        
-        {/* مسیرهای کاربر */}
-        <Route
-          path="/dashboard/*"
-          element={
-            <ProtectedRoute>
-              <UserDashboard />
-            </ProtectedRoute>
-          }
-        />
-        
-        {/* مسیرهای ادمین */}
-        <Route
-          path="/admin/*"
-          element={
-            <ProtectedRoute>
-              <AdminRoutes />
-            </ProtectedRoute>
-          }
-        />
-        
-        {/* صفحه ۴۰۴ */}
+        {/* مسیر پنل ادمین */}
+        <Route path="/admin/*" element={<AdminRoutes />} />
+
+        {/* مسیر پنل کاربران */}
+        <Route path="/user/*" element={<UserRoutes />} />
+
+        {/* مسیرهای سایت ساده */}
+        <Route path="/*" element={<SimpleRoutes />} />
+
+        {/* صفحه 404 */}
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
-    </ThemeProvider>
+    </Suspense>
   );
 };
 

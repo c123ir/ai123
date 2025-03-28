@@ -23,9 +23,9 @@ import {
   CalculatorFilled
 } from '@ant-design/icons';
 import styled from '@emotion/styled';
-import { formatCurrency, convertToPersianDigits } from '../../../utils/DigitConverter';
-import { useTheme } from '../../../components/common/ThemeContext';
-import InputNumber from '../../../components/common/InputNumber';
+import { formatCurrency, convertToPersianDigits } from '../../../modules/shared/utils/DigitConverter';
+import { useTheme } from '../../../modules/shared/context/ThemeContext';
+import { InputNumber } from '../../../modules/shared/components/common';
 
 const { Title, Paragraph, Text } = Typography;
 const { Option } = Select;

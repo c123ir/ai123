@@ -636,4 +636,4 @@ export const getTheme = (mode: PaletteMode): ThemeOptions => {
 
 برای اطلاعات بیشتر درباره سیستم تم Material UI، به [مستندات رسمی](https://mui.com/customization/theming/) مراجعه کنید.
 
-</div> 
+</div>

@@ -20,6 +20,7 @@
 ### ۱. تغییر پکیج‌های استفاده شده
 
 پکیج‌های زیر حذف شده‌اند:
+
 ```json
 "@emotion/react": "^11.11.0",
 "@emotion/styled": "^11.11.0",
@@ -29,6 +30,7 @@
 ```
 
 پکیج‌های زیر اضافه شده‌اند:
+
 ```json
 "@ant-design/charts": "^1.4.2",
 "@ant-design/icons": "^5.2.6",
@@ -257,4 +259,4 @@ export default DigitConverterInput;
 - [مستندات Ant Design Charts](https://charts.ant.design/en)
 - [فارسی‌سازی تقویم در Ant Design](https://ant.design/docs/react/i18n)
 
-</div> 
+</div>

@@ -24,10 +24,11 @@ import {
   UserOutlined,
   TeamOutlined,
   HomeOutlined,
-  EnvironmentOutlined
+  EnvironmentOutlined,
+  GlobalOutlined
 } from '@ant-design/icons';
 import styled from '@emotion/styled';
-import { useTheme } from '../../../components/common/ThemeContext';
+import { useTheme } from '../../../modules/shared/context/ThemeContext';
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -455,6 +456,52 @@ const AboutPage: React.FC = () => {
           items={historyItems}
         />
       </SectionCard>
+      
+      {/* بخش اعضای تیم */}
+      <Title level={2} style={{ marginTop: 32 }}>
+        اعضای تیم
+      </Title>
+      
+      <Row gutter={[24, 24]} style={{ marginBottom: 48 }}>
+        {teamMembers.map((member, index) => (
+          <Col xs={24} sm={12} key={index}>
+            <Card style={{ height: '100%', borderRadius: 8 }}>
+              <div style={{ textAlign: 'center' }}>
+                <Avatar size={80} src={member.avatar} />
+                <Title level={4} style={{ marginTop: '16px' }}>
+                  {member.name}
+                </Title>
+                <p>{member.role}</p>
+                <p>{member.description}</p>
+              </div>
+            </Card>
+          </Col>
+        ))}
+      </Row>
+      
+      {/* بخش تماس با ما */}
+      <Card style={{ marginTop: '40px' }}>
+        <Title level={3}>
+          تماس با ما
+        </Title>
+        <Row gutter={16}>
+          <Col span={8}>
+            <p>
+              <PhoneOutlined /> ۰۲۱-۱۲۳۴۵۶۷۸
+            </p>
+          </Col>
+          <Col span={8}>
+            <p>
+              <MailOutlined /> info@example.com
+            </p>
+          </Col>
+          <Col span={8}>
+            <p>
+              <GlobalOutlined /> www.example.com
+            </p>
+          </Col>
+        </Row>
+      </Card>
     </>
   );
 };

@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { ConfigProvider, theme as antTheme } from 'antd';
 import faIR from 'antd/es/locale/fa_IR';
 import { lightTheme, darkTheme } from '../../../theme';
@@ -15,110 +15,103 @@ const directionConfig = {
   },
 };
 
-// تعریف نوع mode تم
-export type ThemeMode = 'light' | 'dark';
-export type Direction = 'rtl' | 'ltr';
-
-// تعریف کانتکست تم
-interface ThemeContextProps {
-  mode: ThemeMode;
-  toggleTheme: () => void;
-  direction: Direction;
+// تعریف نوع داده برای کانتکست تم
+interface ThemeContextType {
+  darkMode: boolean;
+  toggleDarkMode: () => void;
+  direction: 'rtl' | 'ltr';
   toggleDirection: () => void;
-  setDirection: (dir: Direction) => void;
-  theme: ThemeMode;
 }
 
-const ThemeContext = createContext<ThemeContextProps>({
-  mode: 'light',
-  toggleTheme: () => {},
+// ایجاد کانتکست با مقادیر پیش‌فرض
+const ThemeContext = createContext<ThemeContextType>({
+  darkMode: false,
+  toggleDarkMode: () => {},
   direction: 'rtl',
   toggleDirection: () => {},
-  setDirection: () => {},
-  theme: 'light',
 });
 
-// استفاده از هوک useTheme برای دسترسی به کانتکست تم
-export const useTheme = () => useContext(ThemeContext);
-
-// اضافه کردن useThemeContext با نام جدید برای سازگاری با کدهای قبلی
-export const useThemeContext = useTheme;
-
-// تعریف پراپرتی‌های ThemeProvider
+// تعریف پراپ‌های کامپوننت ThemeProvider
 interface ThemeProviderProps {
   children: ReactNode;
-  defaultMode?: ThemeMode;
-  defaultDirection?: Direction;
 }
 
-// ایجاد ThemeProvider برای مدیریت تم
-export const ThemeProvider: React.FC<ThemeProviderProps> = ({
-  children,
-  defaultMode = 'light',
-  defaultDirection = 'rtl',
-}) => {
-  // استفاده از مقادیر ذخیره شده در localStorage
-  const [mode, setMode] = useState<ThemeMode>(() => {
-    const savedMode = localStorage.getItem('theme-mode');
-    return (savedMode as ThemeMode) || defaultMode;
+/**
+ * کامپوننت تأمین‌کننده تم
+ */
+export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
+  // استفاده از حالت برای نگهداری وضعیت حالت تاریک
+  const [darkMode, setDarkMode] = useState<boolean>(() => {
+    // خواندن وضعیت تم از localStorage (در صورت وجود)
+    const savedDarkMode = localStorage.getItem('darkMode');
+    return savedDarkMode ? JSON.parse(savedDarkMode) : false;
   });
 
-  const [direction, setDirection] = useState<Direction>(() => {
-    const savedDirection = localStorage.getItem('theme-direction');
-    return (savedDirection as Direction) || defaultDirection;
+  // استفاده از حالت برای نگهداری جهت (راست به چپ یا چپ به راست)
+  const [direction, setDirection] = useState<'rtl' | 'ltr'>(() => {
+    // خواندن جهت از localStorage (در صورت وجود)
+    const savedDirection = localStorage.getItem('direction');
+    return savedDirection ? (savedDirection as 'rtl' | 'ltr') : 'rtl';
   });
 
-  // ذخیره‌سازی تغییرات در localStorage
-  useEffect(() => {
-    localStorage.setItem('theme-mode', mode);
-    document.documentElement.setAttribute('data-theme', mode);
-  }, [mode]);
+  // تابع تغییر وضعیت حالت تاریک
+  const toggleDarkMode = () => {
+    setDarkMode((prevDarkMode) => !prevDarkMode);
+  };
 
+  // تابع تغییر جهت
+  const toggleDirection = () => {
+    setDirection((prevDirection) => (prevDirection === 'rtl' ? 'ltr' : 'rtl'));
+  };
+
+  // ذخیره وضعیت تم در localStorage هنگام تغییر
   useEffect(() => {
-    localStorage.setItem('theme-direction', direction);
-    document.documentElement.setAttribute('dir', direction);
+    localStorage.setItem('darkMode', JSON.stringify(darkMode));
+    // اعمال کلاس CSS مناسب به body برای تغییر تم
+    if (darkMode) {
+      document.body.classList.add('dark-theme');
+    } else {
+      document.body.classList.remove('dark-theme');
+    }
+  }, [darkMode]);
+
+  // ذخیره جهت در localStorage هنگام تغییر
+  useEffect(() => {
+    localStorage.setItem('direction', direction);
+    // اعمال ویژگی dir به body برای تغییر جهت
+    document.body.setAttribute('dir', direction);
+    if (direction === 'rtl') {
+      document.body.classList.add('rtl');
+      document.body.classList.remove('ltr');
+    } else {
+      document.body.classList.add('ltr');
+      document.body.classList.remove('rtl');
+    }
   }, [direction]);
 
-  // تغییر حالت تم بین روشن و تاریک
-  const toggleTheme = () => {
-    setMode(prevMode => (prevMode === 'light' ? 'dark' : 'light'));
-  };
-  
-  // تغییر جهت بین راست به چپ و چپ به راست
-  const toggleDirection = () => {
-    setDirection(prevDir => (prevDir === 'rtl' ? 'ltr' : 'rtl'));
-  };
-
-  // انتخاب تم مناسب بر اساس حالت
-  const currentTheme = mode === 'light' ? lightTheme : darkTheme;
-  const currentDirection = directionConfig[direction];
-
+  // ارائه مقادیر به کامپوننت‌های فرزند
   return (
-    <ThemeContext.Provider
-      value={{
-        mode,
-        toggleTheme,
-        direction,
-        toggleDirection,
-        setDirection: (dir: Direction) => setDirection(dir),
-        theme: mode,
-      }}
-    >
-      <ConfigProvider
-        theme={{
-          ...currentTheme,
-          token: {
-            ...currentTheme.token,
-            fontFamily: 'Vazirmatn, -apple-system, BlinkMacSystemFont, sans-serif',
-          },
-        }}
-        direction={currentDirection.direction}
-        locale={currentDirection.locale}
-      >
-        {children}
-      </ConfigProvider>
+    <ThemeContext.Provider value={{ darkMode, toggleDarkMode, direction, toggleDirection }}>
+      {children}
     </ThemeContext.Provider>
   );
 };
 
-export default ThemeContext; 
+/**
+ * هوک دسترسی به کانتکست تم
+ */
+export const useTheme = (): ThemeContextType => {
+  const context = useContext(ThemeContext);
+  if (context === undefined) {
+    throw new Error('useTheme must be used within a ThemeProvider');
+  }
+  return context;
+};
+
+// اضافه کردن useThemeContext برای سازگاری با کدهای قبلی
+export const useThemeContext = useTheme;
+
+// صادر کردن کانتکست تم (برای دسترسی مستقیم در صورت نیاز)
+export { ThemeContext };
+
+export default ThemeProvider; 

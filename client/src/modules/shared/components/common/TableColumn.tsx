@@ -4,31 +4,43 @@ import type { Breakpoint } from 'antd/es/_util/responsiveObserver';
 
 /**
  * تعریف نوع TableColumn که گسترش یافته ColumnType است
- * با اصلاح نوع onFilter برای سازگاری با Ant Design 
+ * این تایپ برای تعریف ستون‌های جدول استفاده می‌شود
+ * با قابلیت‌های گسترش یافته برای پاسخگویی
  */
 export interface TableColumn<T = any> extends Omit<ColumnType<T>, 'onFilter'> {
-  title: string;
-  dataIndex: string;
-  key?: string;
-  render?: (text: any, record: T, index: number) => React.ReactNode;
-  sorter?: boolean | ((a: T, b: T) => number);
-  sortDirections?: ('ascend' | 'descend')[];
-  defaultSortOrder?: 'ascend' | 'descend';
-  filters?: {
-    text: string;
-    value: string | number | boolean;
-  }[];
-  onFilter?: (value: boolean | Key, record: T) => boolean;
-  filterDropdown?: React.ReactNode;
-  filterIcon?: boolean | React.ReactNode;
-  width?: number | string;
-  fixed?: 'left' | 'right';
-  ellipsis?: boolean;
-  align?: 'left' | 'center' | 'right';
-  editable?: boolean;
+  /**
+   * کلید یکتا برای شناسایی ستون
+   */
+  key?: Key;
+  
+  /**
+   * عنوان ستون که در هدر جدول نمایش داده می‌شود
+   */
+  title: React.ReactNode;
+  
+  /**
+   * نام ویژگی داده که مقدار ستون را از آن می‌خواند
+   */
+  dataIndex?: string;
+  
+  /**
+   * تنظیمات پاسخگویی برای نمایش/پنهان کردن ستون در اندازه‌های مختلف صفحه
+   */
   responsive?: Breakpoint[];
-  hidden?: boolean;
-  required?: boolean;
+  
+  /**
+   * اینکه آیا این ستون می‌تواند مرتب‌سازی شود
+   */
+  sortable?: boolean;
+  
+  /**
+   * اینکه آیا این ستون می‌تواند فیلتر شود
+   */
+  filterable?: boolean;
 }
 
-export default TableColumn; 
+// کامپوننت TableColumn
+// این کامپوننت فقط برای تعریف نوع استفاده می‌شود و هیچ محتوایی ندارد
+const TableColumn: React.FC<TableColumn<any>> = () => null;
+
+export default TableColumn;

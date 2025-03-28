@@ -39,12 +39,17 @@
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
     "test": "react-app-rewired test",
-    "eject": "react-scripts eject"
+    "eject": "react-app-rewired eject",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
+    "lint:md": "markdownlint \"src/docs/**/*.md\" \"docs/**/*.md\"",
+    "lint:md:fix": "markdownlint --fix \"src/docs/**/*.md\" \"docs/**/*.md\""
   },
   "eslintConfig": {
     "extends": [
       "react-app",
-      "react-app/jest"
+      "react-app/jest",
+      "plugin:storybook/recommended"
     ]
   },
   "browserslist": {
@@ -60,13 +65,34 @@
     ]
   },
   "devDependencies": {
+    "@chromatic-com/storybook": "^3.2.6",
     "@emotion/babel-plugin": "^11.11.0",
+    "@storybook/addon-essentials": "^8.6.10",
+    "@storybook/addon-interactions": "^8.6.10",
+    "@storybook/addon-links": "^8.6.10",
+    "@storybook/addon-onboarding": "^8.6.10",
+    "@storybook/blocks": "^8.6.10",
+    "@storybook/builder-webpack5": "^8.6.10",
+    "@storybook/preset-create-react-app": "^8.6.10",
+    "@storybook/react": "^8.6.10",
+    "@storybook/react-webpack5": "^8.6.10",
+    "@storybook/test": "^8.6.10",
+    "@storybook/theming": "^8.6.10",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.4.3",
     "customize-cra": "^1.0.0",
+    "eslint-plugin-storybook": "^0.12.0",
     "http-proxy-middleware": "^3.0.3",
+    "jsdoc": "^4.0.4",
+    "markdownlint": "^0.37.4",
+    "markdownlint-cli": "^0.44.0",
+    "prop-types": "^15.8.1",
     "react-app-rewired": "^2.2.1",
-    "react-scripts": "^5.0.1"
+    "react-scripts": "^5.0.1",
+    "storybook": "^8.6.10",
+    "stylis-plugin-rtl": "^2.1.1",
+    "typedoc": "^0.28.1",
+    "webpack": "^5.98.0"
   }
 }

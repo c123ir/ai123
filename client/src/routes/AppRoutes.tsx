@@ -1,13 +1,13 @@
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import AdminRoutes from './AdminRoutes';
+import AdminRoutes from '../modules/admin/routes/AdminRoutes';
 import UserRoutes from './UserRoutes';
 import GuestRoutes from './GuestRoutes';
 import Login from '../pages/common/auth/Login';
 import Register from '../pages/common/auth/Register';
 import ForgotPassword from '../pages/common/auth/ForgotPassword';
-import ProtectedRoute from '../components/common/ProtectedRoute';
+import { ProtectedRoute } from '../modules/shared/components/common';
 import { RootState } from '../store';
 
 /**
@@ -34,12 +34,7 @@ const AppRoutes: React.FC = () => {
       <Route
         path="/admin/*"
         element={
-          <ProtectedRoute
-            isAuthenticated={isAuthenticated}
-            requiredRole="admin"
-            userRole={userRole}
-            redirectPath="/login"
-          >
+          <ProtectedRoute requiredRole="admin">
             <AdminRoutes />
           </ProtectedRoute>
         }
@@ -49,12 +44,7 @@ const AppRoutes: React.FC = () => {
       <Route
         path="/user/*"
         element={
-          <ProtectedRoute
-            isAuthenticated={isAuthenticated}
-            requiredRole="user"
-            userRole={userRole}
-            redirectPath="/login"
-          >
+          <ProtectedRoute requiredRole="user">
             <UserRoutes />
           </ProtectedRoute>
         }

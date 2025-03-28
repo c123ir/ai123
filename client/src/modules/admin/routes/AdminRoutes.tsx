@@ -1,32 +1,28 @@
-import React, { lazy, Suspense } from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
-import { Spin } from 'antd';
+import React from 'react';
+import { Navigate, Route, Routes } from 'react-router-dom';
+import { AdminLayout } from '../../shared/components/layout';
+// TODO: Import these from admin module pages
+import AdminDashboard from '../pages/dashboard/AdminDashboard';
+import UsersManagement from '../pages/users/UsersManagement';
+import TokensManagement from '../pages/tokens/TokensManagement';
+import Reports from '../pages/reports/Reports';
+import Settings from '../pages/settings/Settings';
 
-// لیزی لودینگ صفحات ادمین
-const Dashboard = lazy(() => import('../pages/Dashboard'));
-const Users = lazy(() => import('../pages/Users'));
-const Products = lazy(() => import('../pages/Products'));
-const Settings = lazy(() => import('../pages/Settings'));
-
-// کامپوننت لودینگ
-const Loading = () => (
-  <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-    <Spin size="large" />
-  </div>
-);
-
+/**
+ * مسیرهای مربوط به بخش مدیریت
+ */
 const AdminRoutes: React.FC = () => {
   return (
-    <Suspense fallback={<Loading />}>
-      <Routes>
-        <Route path="/" element={<Navigate to="/admin/dashboard" replace />} />
-        <Route path="dashboard" element={<Dashboard />} />
-        <Route path="users" element={<Users />} />
-        <Route path="products" element={<Products />} />
+    <Routes>
+      <Route path="/" element={<AdminLayout />}>
+        <Route index element={<Navigate to="dashboard" replace />} />
+        <Route path="dashboard" element={<AdminDashboard />} />
+        <Route path="users" element={<UsersManagement />} />
+        <Route path="tokens" element={<TokensManagement />} />
+        <Route path="reports" element={<Reports />} />
         <Route path="settings" element={<Settings />} />
-        <Route path="*" element={<Navigate to="/admin/dashboard" replace />} />
-      </Routes>
-    </Suspense>
+      </Route>
+    </Routes>
   );
 };
 

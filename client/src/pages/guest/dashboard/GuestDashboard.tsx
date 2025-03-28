@@ -33,11 +33,12 @@ import {
   LockOutlined,
   RocketOutlined,
   TrophyOutlined,
-  BookOutlined
+  BookOutlined,
+  LineChartOutlined
 } from '@ant-design/icons';
 import { motion } from 'framer-motion';
 import styled from '@emotion/styled';
-import { useTheme } from '../../../components/common/ThemeContext';
+import { useTheme } from '../../../modules/shared/context/ThemeContext';
 import { numbersWithCommas } from '../../../utils/DigitConverter';
 
 const { Title, Paragraph, Text } = Typography;
@@ -395,7 +396,7 @@ const getStats = async () => {
  * صفحه داشبورد برای کاربران مهمان
  */
 const GuestDashboard: React.FC = () => {
-  const { theme } = useTheme();
+  const { theme, darkMode } = useTheme();
   const navigate = useNavigate();
   
   const [loading, setLoading] = useState(true);
@@ -619,7 +620,124 @@ const GuestDashboard: React.FC = () => {
   };
 
   return (
-    <>
+    <div>
+      <Carousel autoplay style={{ marginBottom: 24 }}>
+        <div>
+          <div style={{ 
+            height: 240, 
+            background: '#364d79', 
+            color: '#fff',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: 24
+          }}>
+            به سامانه دستیار هوشمند ۱۲۳ خوش آمدید
+          </div>
+        </div>
+        <div>
+          <div style={{ 
+            height: 240, 
+            background: '#6a0dad', 
+            color: '#fff',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: 24
+          }}>
+            مشاوره هوشمند با بهترین متخصصان
+          </div>
+        </div>
+        <div>
+          <div style={{ 
+            height: 240, 
+            background: '#0a6b4d', 
+            color: '#fff',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: 24
+          }}>
+            سیستم توکن مانیبل برای پاداش‌دهی هوشمند
+          </div>
+        </div>
+      </Carousel>
+      
+      <Row gutter={[16, 16]}>
+        <Col xs={24} md={8}>
+          <Card title="سیستم توکن مانیبل" extra={<Button type="link">بیشتر <ArrowRightOutlined /></Button>}>
+            <Statistic 
+              title="ارزش هر توکن" 
+              value={1000} 
+              precision={0} 
+              valueStyle={{ color: '#3f8600' }}
+              prefix={<DollarOutlined />}
+              suffix="تومان"
+            />
+            <p>با استفاده از سیستم توکن مانیبل، می‌توانید از تخفیف‌ها و پاداش‌های ویژه بهره‌مند شوید.</p>
+          </Card>
+        </Col>
+        
+        <Col xs={24} md={8}>
+          <Card title="دستیار هوشمند" extra={<Button type="link">بیشتر <ArrowRightOutlined /></Button>}>
+            <Statistic 
+              title="مشاوران فعال" 
+              value={156} 
+              valueStyle={{ color: '#1890ff' }}
+              prefix={<TeamOutlined />}
+            />
+            <p>دستیار هوشمند ۱۲۳ با بهره‌گیری از هوش مصنوعی، بهترین مشاوران را به شما معرفی می‌کند.</p>
+          </Card>
+        </Col>
+        
+        <Col xs={24} md={8}>
+          <Card title="امنیت اطلاعات" extra={<Button type="link">بیشتر <ArrowRightOutlined /></Button>}>
+            <Statistic 
+              title="ضریب امنیت" 
+              value={99.9} 
+              precision={1} 
+              valueStyle={{ color: '#cf1322' }}
+              prefix={<SafetyOutlined />}
+              suffix="%"
+            />
+            <p>امنیت اطلاعات شما برای ما بسیار مهم است. از پیشرفته‌ترین فناوری‌های رمزنگاری استفاده می‌کنیم.</p>
+          </Card>
+        </Col>
+      </Row>
+      
+      <Card title="آمار سیستم" style={{ marginTop: 24 }}>
+        <Row gutter={16}>
+          <Col span={6}>
+            <Statistic 
+              title="کاربران" 
+              value={3456} 
+              prefix={<TeamOutlined />}
+            />
+          </Col>
+          <Col span={6}>
+            <Statistic 
+              title="تراکنش‌ها" 
+              value={2345} 
+              prefix={<LineChartOutlined />}
+            />
+          </Col>
+          <Col span={6}>
+            <Statistic 
+              title="توکن‌های فعال" 
+              value={1234567} 
+              prefix={<DollarOutlined />}
+            />
+          </Col>
+          <Col span={6}>
+            <Statistic 
+              title="مشاوره‌های انجام شده" 
+              value={8765} 
+              prefix={<TeamOutlined />}
+            />
+          </Col>
+        </Row>
+      </Card>
+      
       {/* بخش اصلی - معرفی */}
       <HeroSection 
         $theme={theme}
@@ -776,7 +894,7 @@ const GuestDashboard: React.FC = () => {
           ثبت‌نام رایگان
         </Button>
       </RegisterCard>
-    </>
+    </div>
   );
 };
 

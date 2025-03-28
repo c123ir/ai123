@@ -2,25 +2,15 @@ import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import { useDispatch, useSelector, TypedUseSelectorHook } from 'react-redux';
 
 // ریدیوسرها
-import authReducer from '../modules/auth/store/authSlice';
+import authReducer from './slices/authSlice';
 import tokenReducer from '../modules/token/store/tokenSlice';
-import projectReducer from '../modules/project/store/projectSlice';
-import messageReducer from '../modules/message/store/messageSlice';
-import exploreReducer from '../modules/explore/store/exploreSlice';
-import profileReducer from '../modules/profile/store/profileSlice';
-import uiReducer from '../modules/ui/store/uiSlice';
-import adminReducer from '../modules/admin/store/adminSlice';
+import uiReducer from './slices/uiSlice';
 import advisorReducer from '../modules/advisor/store/advisorSlice';
 
 const rootReducer = combineReducers({
   auth: authReducer,
   token: tokenReducer,
-  project: projectReducer,
-  message: messageReducer,
-  explore: exploreReducer,
-  profile: profileReducer,
   ui: uiReducer,
-  admin: adminReducer,
   advisor: advisorReducer
 });
 

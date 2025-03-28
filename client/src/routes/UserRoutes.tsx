@@ -2,25 +2,27 @@
 
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
+import { UserLayout } from '../modules/shared/components/layout';
 
-// کامپوننت لایه
-import UserLayout from '../components/layout/UserLayout';
-// استفاده از مسیرهای تعریف شده در ماژول کاربر
-import UserDashboardRoutes from '../modules/user/routes/UserRoutes';
+// صفحات کاربر
+import UserDashboard from '../pages/user/dashboard/UserDashboard';
+import UserProfile from '../pages/user/profile/UserProfile';
+import UserSettings from '../pages/user/settings/UserSettings';
+import TokenPage from '../pages/user/token/TokenPage';
 
 /**
- * تعریف مسیرهای دسترسی کاربر
- * استفاده از مسیرهای تعریف شده در ماژول کاربر
+ * مسیرهای مربوط به بخش کاربران
  */
 const UserRoutes: React.FC = () => {
   return (
     <Routes>
-      <Route element={<UserLayout />}>
-        {/* مسیر اصلی - ریدایرکت به داشبورد */}
-        <Route index element={<Navigate to="/user/dashboard" replace />} />
-        
-        {/* استفاده از مسیرهای تعریف شده در ماژول کاربر */}
-        <Route path="*" element={<UserDashboardRoutes />} />
+      <Route path="/" element={<UserLayout />}>
+        <Route index element={<Navigate to="dashboard" replace />} />
+        <Route path="dashboard" element={<UserDashboard />} />
+        <Route path="profile" element={<UserProfile />} />
+        <Route path="settings" element={<UserSettings />} />
+        <Route path="tokens" element={<TokenPage />} />
+        <Route path="*" element={<Navigate to="dashboard" replace />} />
       </Route>
     </Routes>
   );

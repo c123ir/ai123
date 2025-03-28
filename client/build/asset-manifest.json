@@ -1,11 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.8d7920ef.css",
-    "main.js": "/static/js/main.cff5708a.js",
-    "static/js/638.d21f9f1a.chunk.js": "/static/js/638.d21f9f1a.chunk.js",
-    "static/js/906.dea15170.chunk.js": "/static/js/906.dea15170.chunk.js",
-    "static/js/224.4b812094.chunk.js": "/static/js/224.4b812094.chunk.js",
-    "static/js/204.66934e5f.chunk.js": "/static/js/204.66934e5f.chunk.js",
+    "main.css": "/static/css/main.d48cbcb5.css",
+    "main.js": "/static/js/main.d12b2f48.js",
     "static/js/206.276884ca.chunk.js": "/static/js/206.276884ca.chunk.js",
     "static/media/Vazirmatn-Light.woff2": "/static/media/Vazirmatn-Light.a929468e39d61ead9a4a.woff2",
     "static/media/Vazirmatn-Bold.woff2": "/static/media/Vazirmatn-Bold.0d6a47ce8c185a9436b2.woff2",
@@ -13,7 +9,7 @@
     "index.html": "/index.html"
   },
   "entrypoints": [
-    "static/css/main.8d7920ef.css",
-    "static/js/main.cff5708a.js"
+    "static/css/main.d48cbcb5.css",
+    "static/js/main.d12b2f48.js"
   ]
 }

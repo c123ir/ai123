@@ -1,0 +1,67 @@
+/* فونت وزیر - فونت فارسی متن‌باز */
+@font-face {
+  font-family: Vazir;
+  src: url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/fonts/webfonts/Vazirmatn-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Vazir;
+  src: url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/fonts/webfonts/Vazirmatn-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Vazir;
+  src: url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/fonts/webfonts/Vazirmatn-Light.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Vazir;
+  src: url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/fonts/webfonts/Vazirmatn-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* تنظیمات کلی برای استفاده از فونت وزیر */
+html, body {
+  font-family: 'Vazir', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  direction: rtl;
+}
+
+/* تنظیمات برای پشتیبانی از RTL */
+.rtl, [dir="rtl"] {
+  direction: rtl;
+  text-align: right;
+}
+
+.ltr, [dir="ltr"] {
+  direction: ltr;
+  text-align: left;
+}
+
+/* رفع مشکلات احتمالی در فونت */
+* {
+  letter-spacing: 0;
+  word-spacing: normal;
+}
+
+/* تنظیمات اضافی برای خوانایی بهتر متن فارسی */
+p, h1, h2, h3, h4, h5, h6, span, div, button, input, textarea, select, option {
+  font-family: 'Vazir', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+}
+
+/* بهبود نمایش اعداد فارسی */
+.farsi-digits {
+  -moz-font-feature-settings: "ss01";
+  -webkit-font-feature-settings: "ss01";
+  font-feature-settings: "ss01";
+} 

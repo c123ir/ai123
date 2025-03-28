@@ -43,6 +43,9 @@ import SessionDetailPage from '../modules/advisor/pages/SessionDetailPage';
 import ProfilePage from '../modules/profile/pages/ProfilePage';
 import EditProfilePage from '../modules/profile/pages/EditProfilePage';
 
+// صفحات تنظیمات کاربر
+import UserSettingsRoutes from '../pages/user/settings/UserSettingsRoutes';
+
 // صفحات مدیریت
 import AdminDashboardPage from '../modules/admin/pages/AdminDashboardPage';
 
@@ -109,6 +112,9 @@ const AppRoutes = () => {
       {/* مسیرهای پروفایل */}
       <Route path="/profile" element={<PrivateRoute><ProfilePage /></PrivateRoute>} />
       <Route path="/profile/edit" element={<PrivateRoute><EditProfilePage /></PrivateRoute>} />
+      
+      {/* مسیرهای تنظیمات کاربر */}
+      <Route path="/user/settings/*" element={<PrivateRoute><UserSettingsRoutes /></PrivateRoute>} />
       
       {/* مسیرهای مدیریت */}
       <Route path="/admin" element={<AdminRoute><AdminDashboardPage /></AdminRoute>} />

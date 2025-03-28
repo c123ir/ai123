@@ -29,7 +29,15 @@ import {
   DoubleRightOutlined,
   DoubleLeftOutlined,
   SunOutlined,
-  MoonOutlined
+  MoonOutlined,
+  AppstoreOutlined,
+  DashboardOutlined,
+  TeamOutlined,
+  FileTextOutlined,
+  UserSwitchOutlined,
+  KeyOutlined,
+  BellFilled,
+  LinkOutlined
 } from '@ant-design/icons';
 import { Link, useLocation, useNavigate, Outlet } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -156,6 +164,16 @@ interface GuestLayoutProps {
   children?: React.ReactNode;
 }
 
+// تعریف اینترفیس برای ماژول‌های منو
+interface GuestModuleItem {
+  id: string;
+  title: string;
+  icon: React.ReactNode;
+  path: string;
+  enabled: boolean;
+  children?: GuestModuleItem[];
+}
+
 // تعریف استایل‌های Header و Footer به صورت آبجکت تابعی
 const getHeaderStyle = (theme: string) => ({
   background: theme === 'light' ? '#fff' : '#141414',
@@ -181,7 +199,7 @@ const getFooterStyle = (theme: string) => ({
 const getGuestModules = async () => {
   // در اینجا می‌توانید از API درخواست زده و ماژول‌های فعال را دریافت کنید
   // فعلا داده‌ی ساختگی برمی‌گردانیم
-  return [
+  const modules: GuestModuleItem[] = [
     {
       id: 'dashboard',
       title: 'صفحه اصلی',
@@ -198,10 +216,87 @@ const getGuestModules = async () => {
     },
     {
       id: 'about',
-    title: 'درباره ما', 
+      title: 'درباره ما', 
       icon: <InfoCircleOutlined />,
       path: '/guest/about',
       enabled: true,
+    },
+    {
+      id: 'allLinks',
+      title: 'همه لینک‌ها',
+      icon: <AppstoreOutlined />,
+      path: '',
+      enabled: true,
+      children: [
+        {
+          id: 'guestLinks',
+          title: 'لینک‌های مهمان',
+          icon: <UserOutlined />,
+          path: '',
+          enabled: true,
+          children: [
+            { id: 'home', title: 'صفحه اصلی', icon: <HomeOutlined />, path: '/', enabled: true },
+            { id: 'guestDashboard', title: 'داشبورد مهمان', icon: <DashboardOutlined />, path: '/guest/dashboard', enabled: true },
+            { id: 'guestAbout', title: 'درباره ما', icon: <InfoCircleOutlined />, path: '/guest/about', enabled: true },
+            { id: 'guestContact', title: 'تماس با ما', icon: <FileTextOutlined />, path: '/guest/contact', enabled: true },
+            { id: 'guestCalculator', title: 'محاسبه‌گر', icon: <CalculatorOutlined />, path: '/guest/calculator', enabled: true }
+          ]
+        },
+        {
+          id: 'userLinks',
+          title: 'لینک‌های کاربر',
+          icon: <UserSwitchOutlined />,
+          path: '',
+          enabled: true,
+          children: [
+            { id: 'userDashboard', title: 'داشبورد کاربر', icon: <DashboardOutlined />, path: '/user/dashboard', enabled: true },
+            { id: 'userProfile', title: 'پروفایل کاربر', icon: <UserOutlined />, path: '/user/profile', enabled: true },
+            { id: 'userTokens', title: 'توکن‌ها', icon: <KeyOutlined />, path: '/user/tokens', enabled: true },
+            {
+              id: 'userSettings',
+              title: 'تنظیمات',
+              icon: <SettingOutlined />,
+              path: '/user/settings',
+              enabled: true,
+              children: [
+                { id: 'settingsProfile', title: 'تنظیمات پروفایل', icon: <UserOutlined />, path: '/user/settings/profile', enabled: true },
+                { id: 'settingsSecurity', title: 'تنظیمات امنیتی', icon: <KeyOutlined />, path: '/user/settings/security', enabled: true },
+                { id: 'settingsNotification', title: 'تنظیمات اعلان‌ها', icon: <BellFilled />, path: '/user/settings/notifications', enabled: true },
+                { id: 'settingsAppearance', title: 'تنظیمات ظاهری', icon: <SettingOutlined />, path: '/user/settings/appearance', enabled: true }
+              ]
+            }
+          ]
+        },
+        {
+          id: 'adminLinks',
+          title: 'لینک‌های ادمین',
+          icon: <TeamOutlined />,
+          path: '',
+          enabled: true,
+          children: [
+            { id: 'adminDashboard', title: 'داشبورد ادمین', icon: <DashboardOutlined />, path: '/admin/dashboard', enabled: true },
+            { id: 'adminUsers', title: 'مدیریت کاربران', icon: <UserOutlined />, path: '/admin/users', enabled: true },
+            { id: 'adminTokens', title: 'مدیریت توکن‌ها', icon: <KeyOutlined />, path: '/admin/tokens', enabled: true },
+            { id: 'adminReports', title: 'گزارشات', icon: <FileTextOutlined />, path: '/admin/reports', enabled: true },
+            { id: 'adminSettings', title: 'تنظیمات ادمین', icon: <SettingOutlined />, path: '/admin/settings', enabled: true }
+          ]
+        },
+        {
+          id: 'projectLinks',
+          title: 'پروژه‌ها',
+          icon: <LinkOutlined />,
+          path: '',
+          enabled: true,
+          children: [
+            { id: 'explore', title: 'کاوش', icon: <AppstoreOutlined />, path: '/explore', enabled: true },
+            { id: 'projects', title: 'لیست پروژه‌ها', icon: <FileTextOutlined />, path: '/projects', enabled: true },
+            { id: 'createProject', title: 'ایجاد پروژه جدید', icon: <FileTextOutlined />, path: '/projects/create', enabled: true },
+            { id: 'messages', title: 'پیام‌ها', icon: <FileTextOutlined />, path: '/messages', enabled: true },
+            { id: 'advisors', title: 'مشاوران', icon: <TeamOutlined />, path: '/advisors', enabled: true },
+            { id: 'advisorSessions', title: 'جلسات مشاوره', icon: <FileTextOutlined />, path: '/advisors/sessions', enabled: true }
+          ]
+        }
+      ]
     },
     {
       id: 'help',
@@ -211,6 +306,8 @@ const getGuestModules = async () => {
       enabled: true,
     }
   ];
+  
+  return modules;
 };
 
 /**
@@ -234,14 +331,28 @@ const GuestLayout: React.FC<GuestLayoutProps> = () => {
       setLoading(true);
       try {
         const modules = await getGuestModules();
-        const enabledModules = modules
-          .filter(module => module.enabled)
-          .map(module => ({
-            key: module.path,
-            icon: module.icon,
-            label: module.title,
-          }));
-        setMenuItems(enabledModules);
+        
+        // ایجاد آیتم‌های منو با پشتیبانی از زیر منوها
+        const createMenuItems = (items: GuestModuleItem[]): any[] => {
+          return items
+            .filter(module => module.enabled)
+            .map(module => {
+              const menuItem: any = {
+                key: module.path || module.id,
+                icon: module.icon,
+                label: module.title,
+              };
+              
+              // اگر زیرمنو دارد
+              if (module.children && module.children.length > 0) {
+                menuItem.children = createMenuItems(module.children);
+              }
+              
+              return menuItem;
+            });
+        };
+        
+        setMenuItems(createMenuItems(modules));
       } catch (error) {
         console.error('Error fetching modules:', error);
       } finally {
@@ -263,9 +374,12 @@ const GuestLayout: React.FC<GuestLayoutProps> = () => {
   
   // مدیریت کلیک بر روی منو
   const handleMenuClick = (e: { key: string }) => {
-    navigate(e.key);
-    if (isMobile) {
-      setSiderMode('hidden');
+    // اگر کلید منو یک مسیر باشد، به آن مسیر هدایت شود
+    if (e.key.startsWith('/')) {
+      navigate(e.key);
+      if (isMobile) {
+        setSiderMode('hidden');
+      }
     }
   };
   

@@ -8,6 +8,7 @@ import { UserLayout } from '../modules/shared/components/layout';
 import UserDashboard from '../pages/user/dashboard/UserDashboard';
 import UserProfile from '../pages/user/profile/UserProfile';
 import UserSettings from '../pages/user/settings/UserSettings';
+import UserSettingsRoutes from '../pages/user/settings/UserSettingsRoutes';
 import TokenPage from '../pages/user/token/TokenPage';
 
 /**
@@ -20,7 +21,10 @@ const UserRoutes: React.FC = () => {
         <Route index element={<Navigate to="dashboard" replace />} />
         <Route path="dashboard" element={<UserDashboard />} />
         <Route path="profile" element={<UserProfile />} />
-        <Route path="settings" element={<UserSettings />} />
+        
+        {/* مسیرهای تنظیمات با زیرمسیرها */}
+        <Route path="settings/*" element={<UserSettingsRoutes />} />
+        
         <Route path="tokens" element={<TokenPage />} />
         <Route path="*" element={<Navigate to="dashboard" replace />} />
       </Route>

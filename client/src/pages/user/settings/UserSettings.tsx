@@ -14,7 +14,14 @@ import {
   Alert,
   Collapse,
   InputNumber,
-  List
+  List,
+  Tag,
+  Avatar,
+  Space,
+  Upload,
+  message,
+  Tooltip,
+  Modal
 } from 'antd';
 import {
   SettingOutlined,
@@ -30,14 +37,23 @@ import {
   CloseOutlined,
   LogoutOutlined,
   DeleteOutlined,
-  MailOutlined
+  MailOutlined,
+  LockOutlined,
+  EyeInvisibleOutlined,
+  ExclamationCircleOutlined,
+  PlusOutlined,
+  SaveOutlined,
+  UploadOutlined
 } from '@ant-design/icons';
 import { useThemeContext } from '@shared/context/ThemeContext';
+import type { RcFile, UploadFile, UploadProps } from 'antd/es/upload/interface';
+import type { RadioChangeEvent } from 'antd';
 
 const { Title, Paragraph, Text } = Typography;
 const { TabPane } = Tabs;
 const { Option } = Select;
 const { Panel } = Collapse;
+const { confirm } = Modal;
 
 /**
  * صفحه تنظیمات کاربر
@@ -46,6 +62,50 @@ const UserSettings: React.FC = () => {
   const { darkMode, toggleDarkMode, direction, toggleDirection } = useThemeContext();
   const [form] = Form.useForm();
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
+  const [activeTab, setActiveTab] = useState('profile');
+  const [loading, setLoading] = useState(false);
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const [avatarUrl, setAvatarUrl] = useState<string>('/avatars/default.jpg');
+  const [fileList, setFileList] = useState<UploadFile[]>([]);
+
+  // فرم‌های تنظیمات
+  const [profileForm] = Form.useForm();
+  const [securityForm] = Form.useForm();
+  const [notificationForm] = Form.useForm();
+  const [appearanceForm] = Form.useForm();
+
+  // اطلاعات کاربر نمونه
+  const userInfo = {
+    fullName: 'علی محمدی',
+    email: 'ali.mohammadi@example.com',
+    phoneNumber: '09123456789',
+    nationalId: '0123456789',
+    address: 'تهران، خیابان ولیعصر، پلاک 123',
+    postalCode: '1234567890',
+    birthDate: '1370/05/12',
+    gender: 'male',
+    language: 'fa',
+    twoFactorEnabled: true,
+    notificationSettings: {
+      email: true,
+      sms: true,
+      push: false,
+      transactions: true,
+      marketing: false,
+      news: true
+    },
+    appearance: {
+      theme: darkMode ? 'dark' : 'light',
+      fontSize: 'normal',
+      direction: 'rtl',
+      listView: 'compact'
+    },
+    devices: [
+      { id: 1, name: 'گوشی هوشمند', lastLogin: '۱۴۰۳/۰۴/۰۵ - ۱۴:۲۵', active: true },
+      { id: 2, name: 'لپ‌تاپ شخصی', lastLogin: '۱۴۰۳/۰۴/۰۴ - ۱۰:۱۵', active: true },
+      { id: 3, name: 'تبلت', lastLogin: '۱۴۰۳/۰۳/۲۱ - ۲۰:۳۰', active: false }
+    ]
+  };
 
   // ذخیره تنظیمات
   const handleSaveSettings = (values: any) => {
@@ -56,6 +116,93 @@ const UserSettings: React.FC = () => {
   // تغییر وضعیت اعلان‌ها
   const handleNotificationsChange = (checked: boolean) => {
     setNotificationsEnabled(checked);
+  };
+
+  // بررسی قبل از آپلود فایل برای تصویر پروفایل
+  const beforeUpload = (file: RcFile) => {
+    const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+    if (!isJpgOrPng) {
+      message.error('فقط می‌توانید فایل‌های JPG/PNG آپلود کنید!');
+    }
+    const isLt2M = file.size / 1024 / 1024 < 2;
+    if (!isLt2M) {
+      message.error('حجم تصویر باید کمتر از ۲ مگابایت باشد!');
+    }
+    return isJpgOrPng && isLt2M;
+  };
+
+  // مدیریت تغییر فایل آپلودی
+  const handleChange: UploadProps['onChange'] = (info) => {
+    if (info.file.status === 'uploading') {
+      setLoading(true);
+      return;
+    }
+    if (info.file.status === 'done') {
+      setLoading(false);
+      // در پروژه واقعی، URL از پاسخ API دریافت می‌شود
+      setAvatarUrl(URL.createObjectURL(info.file.originFileObj as Blob));
+      message.success('آپلود تصویر با موفقیت انجام شد');
+    }
+  };
+
+  // ارسال فرم پروفایل
+  const handleProfileSubmit = (values: any) => {
+    setLoading(true);
+    // شبیه‌سازی ارسال به سرور
+    setTimeout(() => {
+      console.log('Profile values:', values);
+      setLoading(false);
+      message.success('اطلاعات پروفایل با موفقیت به‌روزرسانی شد');
+    }, 1000);
+  };
+
+  // ارسال فرم امنیت
+  const handleSecuritySubmit = (values: any) => {
+    setLoading(true);
+    // شبیه‌سازی ارسال به سرور
+    setTimeout(() => {
+      console.log('Security values:', values);
+      setLoading(false);
+      message.success('تنظیمات امنیتی با موفقیت به‌روزرسانی شد');
+    }, 1000);
+  };
+
+  // ارسال فرم اعلان‌ها
+  const handleNotificationSubmit = (values: any) => {
+    setLoading(true);
+    // شبیه‌سازی ارسال به سرور
+    setTimeout(() => {
+      console.log('Notification values:', values);
+      setLoading(false);
+      message.success('تنظیمات اعلان‌ها با موفقیت به‌روزرسانی شد');
+    }, 1000);
+  };
+
+  // ارسال فرم ظاهر
+  const handleAppearanceSubmit = (values: any) => {
+    setLoading(true);
+    // شبیه‌سازی ارسال به سرور
+    setTimeout(() => {
+      console.log('Appearance values:', values);
+      setLoading(false);
+      message.success('تنظیمات ظاهری با موفقیت به‌روزرسانی شد');
+    }, 1000);
+  };
+
+  // تأیید حذف دستگاه
+  const showDeleteConfirm = (deviceId: number) => {
+    confirm({
+      title: 'آیا از حذف این دستگاه اطمینان دارید؟',
+      icon: <ExclamationCircleOutlined />,
+      content: 'با حذف این دستگاه، جلسه کاری روی آن پایان می‌یابد و کاربر باید دوباره وارد شود.',
+      okText: 'بله، حذف کن',
+      okType: 'danger',
+      cancelText: 'خیر',
+      onOk() {
+        // شبیه‌سازی حذف دستگاه
+        message.success(`دستگاه با موفقیت حذف شد`);
+      }
+    });
   };
 
   return (
@@ -176,7 +323,6 @@ const UserSettings: React.FC = () => {
               <Collapse 
                 bordered={false} 
                 defaultActiveKey={['1']}
-                disabled={!notificationsEnabled}
               >
                 <Panel header="اعلان‌های سیستمی" key="1">
                   <Form.Item

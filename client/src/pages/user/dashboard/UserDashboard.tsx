@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Card, Row, Col, Statistic, Typography, Table, Button, Tabs, List, Tag, Space } from 'antd';
+import { Card, Row, Col, Statistic, Typography, Table, Button, Tabs, List, Tag, Space, Progress, Avatar, Divider } from 'antd';
 import { 
   DashboardOutlined, 
   UserOutlined, 
@@ -9,7 +9,14 @@ import {
   FallOutlined,
   ClockCircleOutlined,
   CheckCircleOutlined,
-  WarningOutlined
+  WarningOutlined,
+  DesktopOutlined,
+  MobileOutlined,
+  TabletOutlined,
+  CloudServerOutlined,
+  SyncOutlined,
+  CheckOutlined,
+  CloseOutlined
 } from '@ant-design/icons';
 import { useTheme } from '../../../modules/shared/context/ThemeContext';
 import { ColumnsType } from 'antd/es/table';
@@ -23,6 +30,7 @@ const { TabPane } = Tabs;
 const UserDashboard: React.FC = () => {
   const { darkMode } = useTheme();
   const [period, setPeriod] = useState<'day' | 'week' | 'month'>('week');
+  const [activeDevicesTab, setActiveDevicesTab] = useState<'all' | 'online' | 'offline'>('all');
 
   // داده‌های آماری کاربر
   const userStats = [
@@ -95,6 +103,61 @@ const UserDashboard: React.FC = () => {
     },
   ];
 
+  // دستگاه‌های کاربر
+  const userDevices = [
+    {
+      id: 1,
+      name: 'لپ تاپ شخصی',
+      type: 'laptop',
+      icon: <DesktopOutlined />,
+      status: 'online',
+      lastActive: 'هم اکنون',
+      os: 'Windows 11',
+      location: 'تهران، ایران',
+      usagePercent: 85,
+    },
+    {
+      id: 2,
+      name: 'گوشی هوشمند',
+      type: 'mobile',
+      icon: <MobileOutlined />,
+      status: 'online',
+      lastActive: '۵ دقیقه پیش',
+      os: 'Android 14',
+      location: 'تهران، ایران',
+      usagePercent: 65,
+    },
+    {
+      id: 3,
+      name: 'تبلت',
+      type: 'tablet',
+      icon: <TabletOutlined />,
+      status: 'offline',
+      lastActive: '۲ روز پیش',
+      os: 'iPadOS 16',
+      location: 'اصفهان، ایران',
+      usagePercent: 20,
+    },
+    {
+      id: 4,
+      name: 'سرور ابری',
+      type: 'server',
+      icon: <CloudServerOutlined />,
+      status: 'online',
+      lastActive: '۱ ساعت پیش',
+      os: 'Linux Ubuntu',
+      location: 'فرانکفورت، آلمان',
+      usagePercent: 92,
+    },
+  ];
+
+  // فیلتر کردن دستگاه‌ها بر اساس وضعیت
+  const filteredDevices = userDevices.filter(device => 
+    activeDevicesTab === 'all' || 
+    (activeDevicesTab === 'online' && device.status === 'online') || 
+    (activeDevicesTab === 'offline' && device.status === 'offline')
+  );
+
   // تعریف ستون‌های جدول فعالیت‌ها
   const columns: ColumnsType<any> = [
     {
@@ -155,6 +218,7 @@ const UserDashboard: React.FC = () => {
                 backgroundColor: darkMode ? '#1f1f1f' : '#fff',
                 boxShadow: '0 2px 8px rgba(0,0,0,0.09)',
               }}
+              className="dashboard-card"
             >
               <Statistic
                 title={
@@ -180,6 +244,97 @@ const UserDashboard: React.FC = () => {
         ))}
       </Row>
 
+      <Row gutter={[16, 16]} style={{ marginBottom: 24 }}>
+        {/* دستگاه‌های من */}
+        <Col xs={24} lg={24}>
+          <Card
+            title="دستگاه‌های من"
+            bordered={false}
+            style={{ 
+              borderRadius: '8px',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.09)',
+            }}
+            className="dashboard-card"
+            extra={
+              <Button type="primary" icon={<TeamOutlined />} size="small">
+                افزودن دستگاه جدید
+              </Button>
+            }
+          >
+            <Tabs activeKey={activeDevicesTab} onChange={(key) => setActiveDevicesTab(key as any)}>
+              <TabPane tab="همه دستگاه‌ها" key="all" />
+              <TabPane tab="آنلاین" key="online" />
+              <TabPane tab="آفلاین" key="offline" />
+            </Tabs>
+            
+            <List
+              dataSource={filteredDevices}
+              renderItem={device => (
+                <List.Item
+                  key={device.id}
+                  actions={[
+                    device.status === 'online' ? (
+                      <Button type="text" icon={<SyncOutlined />} size="small">
+                        همگام‌سازی
+                      </Button>
+                    ) : (
+                      <Button type="text" icon={<WarningOutlined />} size="small">
+                        بررسی مشکل
+                      </Button>
+                    ),
+                    <Button type="text" danger icon={<CloseOutlined />} size="small">
+                      حذف دستگاه
+                    </Button>
+                  ]}
+                >
+                  <List.Item.Meta
+                    avatar={
+                      <Avatar
+                        icon={device.icon}
+                        style={{ 
+                          backgroundColor: device.status === 'online' ? '#52c41a' : '#bfbfbf',
+                          fontSize: 20
+                        }}
+                        size={48}
+                      />
+                    }
+                    title={
+                      <Space>
+                        {device.name}
+                        <Tag color={device.status === 'online' ? 'success' : 'default'}>
+                          {device.status === 'online' ? 'آنلاین' : 'آفلاین'}
+                        </Tag>
+                      </Space>
+                    }
+                    description={
+                      <>
+                        <Text type="secondary">
+                          سیستم عامل: {device.os} | آخرین فعالیت: {device.lastActive} | موقعیت: {device.location}
+                        </Text>
+                        <div style={{ marginTop: 8, width: '50%' }}>
+                          <Progress 
+                            percent={device.usagePercent} 
+                            size="small" 
+                            status={
+                              device.status === 'online' ? 
+                              (device.usagePercent > 80 ? 'exception' : 'active') : 
+                              'normal'
+                            }
+                          />
+                          <Text type="secondary" style={{ fontSize: 12 }}>
+                            میزان استفاده: {device.usagePercent}%
+                          </Text>
+                        </div>
+                      </>
+                    }
+                  />
+                </List.Item>
+              )}
+            />
+          </Card>
+        </Col>
+      </Row>
+
       <Row gutter={[16, 16]}>
         {/* فعالیت‌های اخیر */}
         <Col xs={24} lg={16} style={{ marginBottom: 16 }}>
@@ -191,6 +346,7 @@ const UserDashboard: React.FC = () => {
               height: '100%', 
               boxShadow: '0 2px 8px rgba(0,0,0,0.09)',
             }}
+            className="dashboard-card"
             extra={
               <Button type="link" size="small">
                 مشاهده همه
@@ -222,6 +378,7 @@ const UserDashboard: React.FC = () => {
               height: '100%',
               boxShadow: '0 2px 8px rgba(0,0,0,0.09)',
             }}
+            className="dashboard-card"
           >
             <List
               itemLayout="horizontal"
@@ -230,16 +387,19 @@ const UserDashboard: React.FC = () => {
                   title: 'بروزرسانی سیستم',
                   description: 'در تاریخ ۱۴۰۳/۰۴/۱۰ سیستم برای بروزرسانی در دسترس نخواهد بود.',
                   type: 'warning',
+                  time: '۲ ساعت پیش'
                 },
                 {
                   title: 'یادآوری گارانتی',
                   description: 'گارانتی محصول X تا ۲۰ روز دیگر منقضی می‌شود.',
                   type: 'info',
+                  time: '۱ روز پیش'
                 },
                 {
                   title: 'پیشنهاد ویژه',
                   description: 'با معرفی دوستان خود ۵۰ توکن رایگان دریافت کنید.',
                   type: 'success',
+                  time: '۳ روز پیش'
                 },
               ]}
               renderItem={(item) => (
@@ -254,7 +414,12 @@ const UserDashboard: React.FC = () => {
                         <CheckCircleOutlined style={{ color: '#52c41a', fontSize: 20 }} />
                       )
                     }
-                    title={item.title}
+                    title={
+                      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <span>{item.title}</span>
+                        <Text type="secondary" style={{ fontSize: '12px' }}>{item.time}</Text>
+                      </div>
+                    }
                     description={item.description}
                   />
                 </List.Item>
@@ -262,70 +427,7 @@ const UserDashboard: React.FC = () => {
             />
           </Card>
         </Col>
-
-        {/* آمار عملکرد */}
-        <Col xs={24} style={{ marginBottom: 16 }}>
-          <Card
-            title="آمار استفاده از سرویس‌ها"
-            bordered={false}
-            style={{ 
-              borderRadius: '8px',
-              boxShadow: '0 2px 8px rgba(0,0,0,0.09)',
-            }}
-          >
-            <Row gutter={[16, 16]}>
-              <Col xs={24} sm={8}>
-                <Card>
-                  <Statistic
-                    title="محاسبات مالی"
-                    value={28}
-                    suffix="مورد"
-                    prefix={<LineChartOutlined />}
-                    valueStyle={{ color: '#1890ff' }}
-                  />
-                </Card>
-              </Col>
-              <Col xs={24} sm={8}>
-                <Card>
-                  <Statistic
-                    title="گارانتی‌های ثبت شده"
-                    value={12}
-                    suffix="مورد"
-                    prefix={<CheckCircleOutlined />}
-                    valueStyle={{ color: '#52c41a' }}
-                  />
-                </Card>
-              </Col>
-              <Col xs={24} sm={8}>
-                <Card>
-                  <Statistic
-                    title="توکن‌های مصرف شده"
-                    value={145}
-                    suffix="توکن"
-                    prefix={<FallOutlined />}
-                    valueStyle={{ color: '#fa8c16' }}
-                  />
-                </Card>
-              </Col>
-            </Row>
-          </Card>
-        </Col>
       </Row>
-
-      {/* دکمه‌های عملیات سریع */}
-      <div style={{ marginTop: 24, textAlign: 'center' }}>
-        <Space size="large">
-          <Button type="primary" size="large">
-            محاسبه جدید
-          </Button>
-          <Button size="large">
-            خرید توکن
-          </Button>
-          <Button size="large">
-            ثبت گارانتی جدید
-          </Button>
-        </Space>
-      </div>
     </>
   );
 };

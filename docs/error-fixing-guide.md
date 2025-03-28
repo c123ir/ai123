@@ -4,6 +4,7 @@
 
 ### ۱. خطای Router
 **مشکل:** تداخل دو `BrowserRouter` در برنامه باعث خطای زیر می‌شود:
+
 ```
 The above error occurred in the <Router> component
 ```
@@ -11,6 +12,7 @@ The above error occurred in the <Router> component
 **راه حل:** اطمینان حاصل کنید که فقط یک `BrowserRouter` در کل برنامه استفاده شده است. معمولاً این کامپوننت باید فقط در `index.tsx` تعریف شود.
 
 **نمونه کد اصلاح شده:**
+
 ```jsx
 // src/index.tsx
 import { BrowserRouter } from 'react-router-dom';
@@ -41,6 +43,7 @@ const App: React.FC = () => {
 
 ### ۲. خطای مسیردهی نادرست کامپوننت‌ها
 **مشکل:** بعد از تغییر ساختار پوشه‌بندی، مسیرهای ایمپورت قدیمی باعث خطا می‌شوند:
+
 ```
 Cannot find module '../../../components/common/ThemeContext' or its corresponding type declarations.
 ```
@@ -48,6 +51,7 @@ Cannot find module '../../../components/common/ThemeContext' or its correspondin
 **راه حل:** به‌روزرسانی همه مسیرهای ایمپورت به ساختار جدید.
 
 **نمونه کد اصلاح شده:**
+
 ```jsx
 // قبل
 import { useTheme } from '../../../components/common/ThemeContext';
@@ -58,6 +62,7 @@ import { useTheme } from '../../../modules/shared/context/ThemeContext';
 
 ### ۳. خطای تایپ‌های ناسازگار
 **مشکل:** ناسازگاری بین تایپ‌های تعریف شده و استفاده شده:
+
 ```
 TS2430: Interface 'ButtonProps' incorrectly extends interface 'Omit<ButtonProps, "type" | "ghost">'.
 ```
@@ -65,6 +70,7 @@ TS2430: Interface 'ButtonProps' incorrectly extends interface 'Omit<ButtonProps,
 **راه حل:** بررسی و اصلاح تعاریف تایپ در کامپوننت‌ها.
 
 **نمونه کد اصلاح شده:**
+
 ```typescript
 // قبل
 export interface ButtonProps extends Omit<AntButtonProps, 'type' | 'ghost'> {
@@ -83,6 +89,7 @@ export interface ButtonProps extends Omit<AntButtonProps, 'type' | 'ghost'> {
 
 ### ۴. خطای ماژول‌های پیدا نشده
 **مشکل:** مسیرهای اشتباه یا ماژول‌های نصب نشده:
+
 ```
 Cannot find module 'antd/es/_util/responsiveObserve' or its corresponding type declarations.
 ```
@@ -90,12 +97,14 @@ Cannot find module 'antd/es/_util/responsiveObserve' or its corresponding type d
 **راه حل:** نصب ماژول‌های لازم یا اصلاح مسیرهای ایمپورت.
 
 **دستور نصب:**
+
 ```bash
 npm install --save antd@latest
 ```
 
 ### ۵. خطای عناصر نامشخص
 **مشکل:** استفاده از کامپوننت‌هایی که ایمپورت نشده‌اند:
+
 ```
 TS2304: Cannot find name 'MailOutlined'.
 ```
@@ -103,6 +112,7 @@ TS2304: Cannot find name 'MailOutlined'.
 **راه حل:** ایمپورت آیکون‌ها یا کامپوننت‌های مورد نیاز.
 
 **نمونه کد اصلاح شده:**
+
 ```jsx
 // اضافه کردن ایمپورت مورد نیاز
 import { MailOutlined } from '@ant-design/icons';
@@ -110,6 +120,7 @@ import { MailOutlined } from '@ant-design/icons';
 
 ### ۶. خطای سرویس‌های ناقص
 **مشکل:** فراخوانی متدهایی که در سرویس وجود ندارند:
+
 ```
 TS2339: Property 'getProfile' does not exist on type...
 ```
@@ -117,6 +128,7 @@ TS2339: Property 'getProfile' does not exist on type...
 **راه حل:** اضافه کردن متدهای لازم به سرویس‌ها.
 
 **نمونه کد اصلاح شده:**
+
 ```typescript
 // قبل
 const profileService = {
@@ -142,6 +154,7 @@ const profileService = {
 - ابتدا خطاهای مربوط به ساختار اصلی برنامه را برطرف کنید، سپس به سراغ خطاهای جزئی‌تر بروید.
 
 ### ۲. پاکسازی کش و بازسازی مجدد
+
 ```bash
 # حذف node_modules و package-lock.json
 rm -rf node_modules package-lock.json
@@ -171,6 +184,7 @@ npm run build
 ```
 
 سپس می‌توانید به این شکل ایمپورت کنید:
+
 ```jsx
 import { useTheme } from '@shared/context/ThemeContext';
 ```

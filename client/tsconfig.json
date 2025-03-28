@@ -28,7 +28,21 @@
     "noErrorTruncation": true,
     "baseUrl": "src",
     "paths": {
-      "*": ["*"]
+      "@shared/*": ["modules/shared/*"],
+      "@admin/*": ["modules/admin/*"],
+      "@user/*": ["modules/user/*"],
+      "@token/*": ["modules/token/*"],
+      "@advisor/*": ["modules/advisor/*"],
+      "@components/*": ["components/*"],
+      "@pages/*": ["pages/*"],
+      "@routes/*": ["routes/*"],
+      "@services/*": ["services/*"],
+      "@utils/*": ["utils/*"],
+      "@assets/*": ["assets/*"],
+      "@hooks/*": ["hooks/*"],
+      "@types/*": ["types/*"],
+      "@store/*": ["store/*"],
+      "@theme/*": ["theme/*"]
     }
   },
   "include": [
